@@ -1,0 +1,13 @@
+Feature	Description
+fixed.acidity	Fixed acidity: Tartaric acid concentration (g/dm^3)
+volatile.acidity	Volatile acidity: Acetic acid (vinegar-like) concentration (g/dm^3)
+citric.acid	Citric acid: Citric acid concentration (g/dm^3), adds freshness and flavor
+residual.sugar	Residual sugar: Amount of sugar left after fermentation (g/dm^3)
+chlorides	Chlorides: Salt content (sodium chloride) (g/dm^3)
+free.sulfur.dioxide	Free sulfur dioxide: Free SO2 protects wine from oxidation and microbes (mg/dm^3)
+total.sulfur.dioxide	Total sulfur dioxide: Total SO2 including bound and free forms (mg/dm^3)
+density	Density: Density of wine, related to sugar and alcohol (g/cm^3)
+pH	pH: Acidity level; lower pH means more acidic
+sulphates	Sulphates: Added for microbial stability (g/dm^3)
+alcohol	Alcohol: Alcohol content (% vol)
+quality	Quality: Quality score (0–10) rated by wine tasters

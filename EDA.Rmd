@@ -16,6 +16,10 @@ if (!require("kableExtra")) install.packages("kableExtra")
 if (!require("here")) install.packages("here")
 
 library(tidyverse)
+library(dplyr)
+library(knitr)
+library(tibble)
+library(gridExtra)
 library(kableExtra)
 library(here)
 ```
@@ -53,11 +57,127 @@ white_wine_data <- read.csv(url_white, sep = ";")
 red_wine <- red_wine_data
 white_wine <- white_wine_data
 
+# Red Wine Summary Statistics
+
+# Check the number of rows and columns
+num_samples_red <- nrow(red_wine)
+num_features_red <- ncol(red_wine)
+
+# Feature names
+feature_names_red <- colnames(red_wine)
+
+# Feature types (data types of each column)
+feature_types_red <- sapply(red_wine, class)
+
+# Create summary statistics for numeric variables (mean, median, sd, min, max)
+numeric_stats_red <- red_wine %>%
+  select(where(is.numeric)) %>%
+  summary()
+
+# Combine feature information (names, types, and measurement levels)
+measurement_levels_red <- c(
+  "fixed.acidity" = "Ratio",
+  "volatile.acidity" = "Ratio",
+  "citric.acid" = "Ratio",
+  "residual.sugar" = "Ratio",
+  "chlorides" = "Ratio",
+  "free.sulfur.dioxide" = "Ratio",
+  "total.sulfur.dioxide" = "Ratio",
+  "density" = "Ratio",
+  "pH" = "Interval",
+  "sulphates" = "Ratio",
+  "alcohol" = "Ratio",
+  "quality" = "Ordinal"
+)
+
+info_df_red <- data.frame(
+  Feature_red = feature_names_red,
+  Type_red = feature_types_red,
+  Measurement_red = measurement_levels_red[feature_names_red]
+)
+
+# Print Red Wine summary
+cat("\nRed Wine Data Summary:\n")
+print(info_df_red)
+
+cat("\nNumeric Summary Statistics (Red Wine):\n")
+print(numeric_stats_red)
+
+
+# White Wine Summary Statistics
+
+# Check the number of rows and columns
+num_samples_white <- nrow(white_wine)
+num_features_white <- ncol(white_wine)
+
+# Feature names
+feature_names_white <- colnames(white_wine)
+
+# Feature types (data types of each column)
+feature_types_white <- sapply(white_wine, class)
+
+# Create summary statistics for numeric variables (mean, median, sd, min, max)
+numeric_stats_white <- white_wine %>%
+  select(where(is.numeric)) %>%
+  summary()
+
+# Combine feature information (names, types, and measurement levels)
+measurement_levels_white <- c(
+  "fixed.acidity" = "Ratio",
+  "volatile.acidity" = "Ratio",
+  "citric.acid" = "Ratio",
+  "residual.sugar" = "Ratio",
+  "chlorides" = "Ratio",
+  "free.sulfur.dioxide" = "Ratio",
+  "total.sulfur.dioxide" = "Ratio",
+  "density" = "Ratio",
+  "pH" = "Interval",
+  "sulphates" = "Ratio",
+  "alcohol" = "Ratio",
+  "quality" = "Ordinal"
+)
+
+info_df_white <- data.frame(
+  Feature_white = feature_names_white,
+  Type_white = feature_types_white,
+  Measurement_white = measurement_levels_white[feature_names_white]
+)
+
+# Print White Wine summary
+cat("\nWhite Wine Data Summary:\n")
+print(info_df_white)
+
+cat("\nNumeric Summary Statistics (White Wine):\n")
+print(numeric_stats_white)
+
+
+# Combined Summary of Both Red and White Wine Data
+cat("\nCombined Wine Data Summary:\n")
+combined_summary <- list(
+  "Red Wine Summary" = info_df_red,
+  "White Wine Summary" = info_df_white
+)
+
+# If you want to view them together in a summary format
+print(combined_summary)
+
+
+# Load required libraries
+library(gridExtra)
+library(grid)
+
 # Ensure output folder exists
-if (!dir.exists("figures")) dir.create("figures")
+
+# Load required library
+library(knitr)
 
 # Column names and descriptions
-col_names <- colnames(red_wine)
+col_names <- c(
+  "fixed.acidity", "volatile.acidity", "citric.acid", "residual.sugar",
+  "chlorides", "free.sulfur.dioxide", "total.sulfur.dioxide", "density",
+  "pH", "sulphates", "alcohol", "quality"
+)
+
 descriptions <- c(
   "Fixed acidity: Tartaric acid concentration (g/dm^3)",
   "Volatile acidity: Acetic acid (vinegar-like) concentration (g/dm^3)",
@@ -76,37 +196,17 @@ descriptions <- c(
 # Build data frame
 feature_info <- data.frame(
   Feature = col_names,
-  Description = enc2utf8(descriptions),
+  Description = descriptions,
   stringsAsFactors = FALSE
 )
 
-# Wrap long text in Description
-wrap_text <- function(x, width = 50) {
-  sapply(x, function(y) paste(strwrap(y, width = width), collapse = "\n"))
-}
-feature_info$Description <- wrap_text(feature_info$Description)
+# Display as Markdown table
+kable(feature_info, format = "markdown", align = "l")
+```
 
-# Create table
-table <- tableGrob(feature_info, rows = NULL)
 
-# Color first column
-for (i in seq_len(nrow(feature_info))) {
-  table$grobs[table$layout$t == i + 1 & table$layout$l == 1][[1]]$gp <- gpar(fill = "#e6f2ff", fontsize = 9)
-}
 
-# Set column widths
-table$widths <- unit(c(0.35, 0.65), "npc")
 
-# Set font size throughout
-for (i in seq_along(table$grobs)) {
-  g <- table$grobs[[i]]
-  if (inherits(g, "text")) g$gp <- gpar(fontsize = 9)
-  table$grobs[[i]] <- g
-}
-
-# Draw the table inline
-grid.newpage()
-grid.draw(table)
 
 ```
 
@@ -168,15 +268,35 @@ my_theme <- ttheme_default(
 
 wine_table <- tableGrob(sample_data, rows = NULL, theme = my_theme)
 
-title <- textGrob("Red Wine Quality Dataset (First 10 Rows)",
-                  gp = gpar(fontsize = 12, fontface = "bold"))
-title_grob <- gtable_row("title", list(title), height = grobHeight(title) + unit(2, "mm"))
+# Equalize column widths
+wine_table$widths <- rep(unit(1 / ncol(wine_table), "npc"), ncol(wine_table))
 
-full_table <- gtable_add_rows(wine_table, heights = title_grob$heights, pos = 0)
-full_table <- gtable_add_grob(full_table, grobs = title, t = 1, l = 1, r = ncol(full_table))
+# Title text
+title_text <- "Red Wine Quality Dataset (First 10 Rows)"
+wrapped_title <- paste(strwrap(title_text, width = 60), collapse = "\n")
+
+# Create title grob centered
+title <- textGrob(wrapped_title,
+                  gp = gpar(fontsize = 12, fontface = "bold"),
+                  just = "center", x = 0.5)
+
+# Add vertical padding by composing a grob tree:
+padded_title <- grobTree(
+  rectGrob(gp = gpar(col = NA, fill = NA)),  # invisible rect, fills space
+  title
+)
+
+# Calculate height to add enough vertical space manually
+extra_height <- unit(10, "mm")  # adjust as needed
+
+full_table <- gtable_add_rows(wine_table, heights = grobHeight(padded_title) + extra_height, pos = 0)
+
+full_table <- gtable_add_grob(full_table, grobs = padded_title, t = 1, l = 1, r = ncol(full_table))
 
 grid.newpage()
 grid.draw(full_table)
+
+
 ```
 For white whine , we can visualize the first few enties
 
@@ -197,17 +317,33 @@ my_theme <- ttheme_default(
 
 wine_table <- tableGrob(sample_data, rows = NULL, theme = my_theme)
 
-title <- textGrob("White Wine Quality Dataset (First 10 Rows)",
-                  gp = gpar(fontsize = 12, fontface = "bold"))
-title_grob <- gtable_row("title", list(title), height = grobHeight(title) + unit(2, "mm"))
+# Equalize column widths
+wine_table$widths <- rep(unit(1 / ncol(wine_table), "npc"), ncol(wine_table))
 
-full_table <- gtable_add_rows(wine_table, heights = title_grob$heights, pos = 0)
-full_table <- gtable_add_grob(full_table, grobs = title, t = 1, l = 1, r = ncol(full_table))
+# Title text
+title_text <- "White Wine Quality Dataset (First 10 Rows)"
+wrapped_title <- paste(strwrap(title_text, width = 60), collapse = "\n")
+
+# Create title grob centered
+title <- textGrob(wrapped_title,
+                  gp = gpar(fontsize = 12, fontface = "bold"),
+                  just = "center", x = 0.5)
+
+# Add vertical padding by composing a grob tree:
+padded_title <- grobTree(
+  rectGrob(gp = gpar(col = NA, fill = NA)),  # invisible rect, fills space
+  title
+)
+
+# Calculate height to add enough vertical space manually
+extra_height <- unit(10, "mm")  # adjust as needed
+
+full_table <- gtable_add_rows(wine_table, heights = grobHeight(padded_title) + extra_height, pos = 0)
+
+full_table <- gtable_add_grob(full_table, grobs = padded_title, t = 1, l = 1, r = ncol(full_table))
 
 grid.newpage()
 grid.draw(full_table)
-# Fix clipping by auto-resizing column widths
-table$widths <- unit(rep(10, ncol(table)), "null")
 ```
 
 ## 3. Exploratory Data Analysis
