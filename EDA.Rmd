@@ -27,7 +27,12 @@ In this project, the objective is to identify the chemical characteristics that 
 Based on background research and intuition, I hypothesize that features like higher alcohol content and balanced acidity levels may correlate positively with better wine quality. On the other hand, extremely high levels of certain components like sulfur dioxide may negatively affect taste and thus reduce quality. Through exploratory data analysis and statistical testing, I aim to extract non-obvious insights about what makes a wine “good” or “bad” according to the dataset.
 
 ## 2. Data Understanding
-In this section, we load the red wine dataset and explore its structure.
+
+This analysis is based on the UCI Wine Quality Data Set, which provides physicochemical and quality-related attributes for red and white variants of Portuguese "Vinho Verde" wine. The dataset includes chemical measurements such as alcohol, acidity, sugar, and sulfur dioxide levels, along with quality scores assigned by trained sensory panels. It was accessed from the UCI Machine Learning Repository, a widely used source for open datasets in applied machine learning and data science research.
+You can find the dataset here:[UCI Wine Quality Data Set](https://archive.ics.uci.edu/ml/datasets/wine+quality).
+
+Next we load the red wine dataset and explore its structure.
+The red and white wine datasets from the UCI Wine Quality Data Set were first loaded separately and then combined into a single dataset with an added type column to indicate wine variety. Initial inspection showed that the data contained no missing values and all variables were already numeric, eliminating the need for imputation or type conversion. The quality variable, which represents the wine's rating by sensory analysts, was preserved in both numeric form (for correlation analysis) and as an ordered factor (for boxplots and group comparisons). No outliers were removed, as visual inspections of distributions indicated that extreme values were within realistic chemical ranges. Overall, the dataset required minimal cleaning and was ready for analysis after labeling, verification, and structure alignment.
 
 
 ```{r Table1, echo=FALSE, message=FALSE, fig.align='center', fig.path="figures/"}
@@ -475,3 +480,6 @@ Conversely, volatile acidity was negatively correlated with quality, reinforcing
 For a wine business starting out, these findings provide a clear, evidence-based strategy for improving product quality, optimizing production, and building a competitive brand. The analysis shows that alcohol content is one of the strongest predictors of wine quality, so the business should prioritize controlling fermentation processes to ensure wines consistently reach the optimal alcohol range. At the same time, volatile acidity must be carefully managed, as high levels are associated with lower quality scores. This requires investment in clean fermentation practices and routine chemical monitoring.
 
 Sulphates, when used appropriately, serve as effective preservatives that can enhance freshness and contribute positively to perceived quality—particularly in white wines. Therefore, managing sulphate levels within a favorable range can improve shelf-life without compromising taste. While residual sugar and pH are less directly tied to quality scores, they are valuable in shaping the stylistic profile of wines and can be adjusted to suit consumer preferences or brand positioning.
+
+
+
