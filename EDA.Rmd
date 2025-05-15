@@ -59,6 +59,20 @@ white_wine <- white_wine_data
 
 # Red Wine Summary Statistics
 
+
+# Number of samples (rows)
+num_samples_Red = nrow(red_wine)
+
+# Number of features (columns)
+num_features_Red = ncol(red_wine)
+
+# Feature names
+feature_names_Red = colnames(red_wine)
+
+# Data types
+feature_types_Red = sapply(red_wine, class)
+
+
 # Check the number of rows and columns
 num_samples_red <- nrow(red_wine)
 num_features_red <- ncol(red_wine)
@@ -105,6 +119,18 @@ print(numeric_stats_red)
 
 
 # White Wine Summary Statistics
+
+# Number of samples (rows)
+num_samples_White = nrow(white_wine)
+
+# Number of features (columns)
+num_features_White = ncol(white_wine)
+
+# Feature names
+feature_names_White = colnames(white_wine)
+
+# Data types
+feature_types_White = sapply(white_wine, class)
 
 # Check the number of rows and columns
 num_samples_white <- nrow(white_wine)
