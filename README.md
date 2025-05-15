@@ -152,7 +152,9 @@ Next we load the red wine dataset and explore its structure. The red and white w
 
 The columns of the wine dataset represent a mix of physicochemical properties and a sensory-based quality score. Most features, such as fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, and alcohol, are continuous numerical variables measured on a ratio scale. These values have a true zero and support meaningful arithmetic operations, making them suitable for statistical modeling and correlation analysis. The final column, quality, is a subjective score assigned by wine tasters on a scale from 0 to 10. This variable is ordinal, as it reflects a ranked assessment of wine quality but does not guarantee equal intervals between score values.
 
-<img src="EDA_files/figure-gfm/Table3-1.png" style="display: block; margin: auto;" /> For white whine , we can visualize the first few enties
+<img src="EDA_files/figure-gfm/Table3-1.png" style="display: block; margin: auto;" /> 
+
+For white whine , we can visualize the first few enties
 
 <img src="EDA_files/figure-gfm/Table4-1.png" style="display: block; margin: auto;" />
 
