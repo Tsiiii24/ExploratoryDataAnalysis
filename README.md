@@ -154,7 +154,7 @@ The columns of the wine dataset represent a mix of physicochemical properties an
 
 <img src="EDA_files/figure-gfm/Table3-1.png" style="display: block; margin: auto;" /> 
 
-For white whine , we can visualize the first few enties
+For white wine , we can visualize the first few enties
 
 <img src="EDA_files/figure-gfm/Table4-1.png" style="display: block; margin: auto;" />
 
