@@ -1,6 +1,6 @@
 ---
 title: "Chemical Determinants of Wine Quality: A Data-Driven Analysis Using the UCI Wine Dataset"
-Author: "Maurice Otieno, Wanos Bahiru, Biose Ugbo"
+author: "Maurice Otieno, Wanos Bahiru, Biose Ugbo"
 output:  
   github_document: 
     pandoc_args: ["--wrap=none"]
@@ -49,11 +49,6 @@ red_wine_data <- read.csv(url, sep = ";")
 url_white <- "https://raw.githubusercontent.com/Tsiiii24/ExploratoryDataAnalysis/main/winequality-white.csv"
 white_wine_data <- read.csv(url_white, sep = ";")
 
-# Preview the data
-head(white_wine_data)
-
-# Preview the data
-head(red_wine_data)
 
 red_wine <- red_wine_data
 white_wine <- white_wine_data
