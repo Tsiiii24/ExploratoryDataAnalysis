@@ -9,7 +9,9 @@ Based on background research and intuition, I hypothesize that features like hig
 
 ## 2. Data Understanding
 
-In this section, we load the red wine dataset and explore its structure.
+This analysis is based on the UCI Wine Quality Data Set, which provides physicochemical and quality-related attributes for red and white variants of Portuguese “Vinho Verde” wine. The dataset includes chemical measurements such as alcohol, acidity, sugar, and sulfur dioxide levels, along with quality scores assigned by trained sensory panels. It was accessed from the UCI Machine Learning Repository, a widely used source for open datasets in applied machine learning and data science research. You can find the dataset here:[UCI Wine Quality Data Set](https://archive.ics.uci.edu/ml/datasets/wine+quality).
+
+Next we load the red wine dataset and explore its structure. The red and white wine datasets from the UCI Wine Quality Data Set were first loaded separately and then combined into a single dataset with an added type column to indicate wine variety. Initial inspection showed that the data contained no missing values and all variables were already numeric, eliminating the need for imputation or type conversion. The quality variable, which represents the wine’s rating by sensory analysts, was preserved in both numeric form (for correlation analysis) and as an ordered factor (for boxplots and group comparisons). No outliers were removed, as visual inspections of distributions indicated that extreme values were within realistic chemical ranges. Overall, the dataset required minimal cleaning and was ready for analysis after labeling, verification, and structure alignment.
 
     ##   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
     ## 1           7.0             0.27        0.36           20.7     0.045
