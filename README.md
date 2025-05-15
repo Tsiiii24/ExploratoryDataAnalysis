@@ -1,5 +1,6 @@
 Chemical Determinants of Wine Quality: A Data-Driven Analysis Using the UCI Wine Dataset
 ================
+Maurice Otieno, Wanos Bahiru, Biose Ugbo
 
 ## 1. Business Understanding
 
@@ -13,51 +14,139 @@ This analysis is based on the UCI Wine Quality Data Set, which provides physicoc
 
 Next we load the red wine dataset and explore its structure. The red and white wine datasets from the UCI Wine Quality Data Set were first loaded separately and then combined into a single dataset with an added type column to indicate wine variety. Initial inspection showed that the data contained no missing values and all variables were already numeric, eliminating the need for imputation or type conversion. The quality variable, which represents the wine’s rating by sensory analysts, was preserved in both numeric form (for correlation analysis) and as an ordered factor (for boxplots and group comparisons). No outliers were removed, as visual inspections of distributions indicated that extreme values were within realistic chemical ranges. Overall, the dataset required minimal cleaning and was ready for analysis after labeling, verification, and structure alignment.
 
-    ##   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
-    ## 1           7.0             0.27        0.36           20.7     0.045
-    ## 2           6.3             0.30        0.34            1.6     0.049
-    ## 3           8.1             0.28        0.40            6.9     0.050
-    ## 4           7.2             0.23        0.32            8.5     0.058
-    ## 5           7.2             0.23        0.32            8.5     0.058
-    ## 6           8.1             0.28        0.40            6.9     0.050
-    ##   free.sulfur.dioxide total.sulfur.dioxide density   pH sulphates alcohol
-    ## 1                  45                  170  1.0010 3.00      0.45     8.8
-    ## 2                  14                  132  0.9940 3.30      0.49     9.5
-    ## 3                  30                   97  0.9951 3.26      0.44    10.1
-    ## 4                  47                  186  0.9956 3.19      0.40     9.9
-    ## 5                  47                  186  0.9956 3.19      0.40     9.9
-    ## 6                  30                   97  0.9951 3.26      0.44    10.1
-    ##   quality
-    ## 1       6
-    ## 2       6
-    ## 3       6
-    ## 4       6
-    ## 5       6
-    ## 6       6
+    ## 
+    ## Red Wine Data Summary:
 
-    ##   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
-    ## 1           7.4             0.70        0.00            1.9     0.076
-    ## 2           7.8             0.88        0.00            2.6     0.098
-    ## 3           7.8             0.76        0.04            2.3     0.092
-    ## 4          11.2             0.28        0.56            1.9     0.075
-    ## 5           7.4             0.70        0.00            1.9     0.076
-    ## 6           7.4             0.66        0.00            1.8     0.075
-    ##   free.sulfur.dioxide total.sulfur.dioxide density   pH sulphates alcohol
-    ## 1                  11                   34  0.9978 3.51      0.56     9.4
-    ## 2                  25                   67  0.9968 3.20      0.68     9.8
-    ## 3                  15                   54  0.9970 3.26      0.65     9.8
-    ## 4                  17                   60  0.9980 3.16      0.58     9.8
-    ## 5                  11                   34  0.9978 3.51      0.56     9.4
-    ## 6                  13                   40  0.9978 3.51      0.56     9.4
-    ##   quality
-    ## 1       5
-    ## 2       5
-    ## 3       5
-    ## 4       6
-    ## 5       5
-    ## 6       5
+    ##                               Feature_red Type_red Measurement_red
+    ## fixed.acidity               fixed.acidity  numeric           Ratio
+    ## volatile.acidity         volatile.acidity  numeric           Ratio
+    ## citric.acid                   citric.acid  numeric           Ratio
+    ## residual.sugar             residual.sugar  numeric           Ratio
+    ## chlorides                       chlorides  numeric           Ratio
+    ## free.sulfur.dioxide   free.sulfur.dioxide  numeric           Ratio
+    ## total.sulfur.dioxide total.sulfur.dioxide  numeric           Ratio
+    ## density                           density  numeric           Ratio
+    ## pH                                     pH  numeric        Interval
+    ## sulphates                       sulphates  numeric           Ratio
+    ## alcohol                           alcohol  numeric           Ratio
+    ## quality                           quality  integer         Ordinal
 
-<img src="figures/Table1-1.png" style="display: block; margin: auto;" />
+    ## 
+    ## Numeric Summary Statistics (Red Wine):
+
+    ##  fixed.acidity   volatile.acidity  citric.acid    residual.sugar  
+    ##  Min.   : 4.60   Min.   :0.1200   Min.   :0.000   Min.   : 0.900  
+    ##  1st Qu.: 7.10   1st Qu.:0.3900   1st Qu.:0.090   1st Qu.: 1.900  
+    ##  Median : 7.90   Median :0.5200   Median :0.260   Median : 2.200  
+    ##  Mean   : 8.32   Mean   :0.5278   Mean   :0.271   Mean   : 2.539  
+    ##  3rd Qu.: 9.20   3rd Qu.:0.6400   3rd Qu.:0.420   3rd Qu.: 2.600  
+    ##  Max.   :15.90   Max.   :1.5800   Max.   :1.000   Max.   :15.500  
+    ##    chlorides       free.sulfur.dioxide total.sulfur.dioxide    density      
+    ##  Min.   :0.01200   Min.   : 1.00       Min.   :  6.00       Min.   :0.9901  
+    ##  1st Qu.:0.07000   1st Qu.: 7.00       1st Qu.: 22.00       1st Qu.:0.9956  
+    ##  Median :0.07900   Median :14.00       Median : 38.00       Median :0.9968  
+    ##  Mean   :0.08747   Mean   :15.87       Mean   : 46.47       Mean   :0.9967  
+    ##  3rd Qu.:0.09000   3rd Qu.:21.00       3rd Qu.: 62.00       3rd Qu.:0.9978  
+    ##  Max.   :0.61100   Max.   :72.00       Max.   :289.00       Max.   :1.0037  
+    ##        pH          sulphates         alcohol         quality     
+    ##  Min.   :2.740   Min.   :0.3300   Min.   : 8.40   Min.   :3.000  
+    ##  1st Qu.:3.210   1st Qu.:0.5500   1st Qu.: 9.50   1st Qu.:5.000  
+    ##  Median :3.310   Median :0.6200   Median :10.20   Median :6.000  
+    ##  Mean   :3.311   Mean   :0.6581   Mean   :10.42   Mean   :5.636  
+    ##  3rd Qu.:3.400   3rd Qu.:0.7300   3rd Qu.:11.10   3rd Qu.:6.000  
+    ##  Max.   :4.010   Max.   :2.0000   Max.   :14.90   Max.   :8.000
+
+    ## 
+    ## White Wine Data Summary:
+
+    ##                             Feature_white Type_white Measurement_white
+    ## fixed.acidity               fixed.acidity    numeric             Ratio
+    ## volatile.acidity         volatile.acidity    numeric             Ratio
+    ## citric.acid                   citric.acid    numeric             Ratio
+    ## residual.sugar             residual.sugar    numeric             Ratio
+    ## chlorides                       chlorides    numeric             Ratio
+    ## free.sulfur.dioxide   free.sulfur.dioxide    numeric             Ratio
+    ## total.sulfur.dioxide total.sulfur.dioxide    numeric             Ratio
+    ## density                           density    numeric             Ratio
+    ## pH                                     pH    numeric          Interval
+    ## sulphates                       sulphates    numeric             Ratio
+    ## alcohol                           alcohol    numeric             Ratio
+    ## quality                           quality    integer           Ordinal
+
+    ## 
+    ## Numeric Summary Statistics (White Wine):
+
+    ##  fixed.acidity    volatile.acidity  citric.acid     residual.sugar  
+    ##  Min.   : 3.800   Min.   :0.0800   Min.   :0.0000   Min.   : 0.600  
+    ##  1st Qu.: 6.300   1st Qu.:0.2100   1st Qu.:0.2700   1st Qu.: 1.700  
+    ##  Median : 6.800   Median :0.2600   Median :0.3200   Median : 5.200  
+    ##  Mean   : 6.855   Mean   :0.2782   Mean   :0.3342   Mean   : 6.391  
+    ##  3rd Qu.: 7.300   3rd Qu.:0.3200   3rd Qu.:0.3900   3rd Qu.: 9.900  
+    ##  Max.   :14.200   Max.   :1.1000   Max.   :1.6600   Max.   :65.800  
+    ##    chlorides       free.sulfur.dioxide total.sulfur.dioxide    density      
+    ##  Min.   :0.00900   Min.   :  2.00      Min.   :  9.0        Min.   :0.9871  
+    ##  1st Qu.:0.03600   1st Qu.: 23.00      1st Qu.:108.0        1st Qu.:0.9917  
+    ##  Median :0.04300   Median : 34.00      Median :134.0        Median :0.9937  
+    ##  Mean   :0.04577   Mean   : 35.31      Mean   :138.4        Mean   :0.9940  
+    ##  3rd Qu.:0.05000   3rd Qu.: 46.00      3rd Qu.:167.0        3rd Qu.:0.9961  
+    ##  Max.   :0.34600   Max.   :289.00      Max.   :440.0        Max.   :1.0390  
+    ##        pH          sulphates         alcohol         quality     
+    ##  Min.   :2.720   Min.   :0.2200   Min.   : 8.00   Min.   :3.000  
+    ##  1st Qu.:3.090   1st Qu.:0.4100   1st Qu.: 9.50   1st Qu.:5.000  
+    ##  Median :3.180   Median :0.4700   Median :10.40   Median :6.000  
+    ##  Mean   :3.188   Mean   :0.4898   Mean   :10.51   Mean   :5.878  
+    ##  3rd Qu.:3.280   3rd Qu.:0.5500   3rd Qu.:11.40   3rd Qu.:6.000  
+    ##  Max.   :3.820   Max.   :1.0800   Max.   :14.20   Max.   :9.000
+
+    ## 
+    ## Combined Wine Data Summary:
+
+    ## $`Red Wine Summary`
+    ##                               Feature_red Type_red Measurement_red
+    ## fixed.acidity               fixed.acidity  numeric           Ratio
+    ## volatile.acidity         volatile.acidity  numeric           Ratio
+    ## citric.acid                   citric.acid  numeric           Ratio
+    ## residual.sugar             residual.sugar  numeric           Ratio
+    ## chlorides                       chlorides  numeric           Ratio
+    ## free.sulfur.dioxide   free.sulfur.dioxide  numeric           Ratio
+    ## total.sulfur.dioxide total.sulfur.dioxide  numeric           Ratio
+    ## density                           density  numeric           Ratio
+    ## pH                                     pH  numeric        Interval
+    ## sulphates                       sulphates  numeric           Ratio
+    ## alcohol                           alcohol  numeric           Ratio
+    ## quality                           quality  integer         Ordinal
+    ## 
+    ## $`White Wine Summary`
+    ##                             Feature_white Type_white Measurement_white
+    ## fixed.acidity               fixed.acidity    numeric             Ratio
+    ## volatile.acidity         volatile.acidity    numeric             Ratio
+    ## citric.acid                   citric.acid    numeric             Ratio
+    ## residual.sugar             residual.sugar    numeric             Ratio
+    ## chlorides                       chlorides    numeric             Ratio
+    ## free.sulfur.dioxide   free.sulfur.dioxide    numeric             Ratio
+    ## total.sulfur.dioxide total.sulfur.dioxide    numeric             Ratio
+    ## density                           density    numeric             Ratio
+    ## pH                                     pH    numeric          Interval
+    ## sulphates                       sulphates    numeric             Ratio
+    ## alcohol                           alcohol    numeric             Ratio
+    ## quality                           quality    integer           Ordinal
+
+| Feature | Description |
+|:---|:---|
+| fixed.acidity | Fixed acidity: Tartaric acid concentration (g/dm^3) |
+| volatile.acidity | Volatile acidity: Acetic acid (vinegar-like) concentration (g/dm^3) |
+| citric.acid | Citric acid: Citric acid concentration (g/dm^3), adds freshness and flavor |
+| residual.sugar | Residual sugar: Amount of sugar left after fermentation (g/dm^3) |
+| chlorides | Chlorides: Salt content (sodium chloride) (g/dm^3) |
+| free.sulfur.dioxide | Free sulfur dioxide: Free SO2 protects wine from oxidation and microbes (mg/dm^3) |
+| total.sulfur.dioxide | Total sulfur dioxide: Total SO2 including bound and free forms (mg/dm^3) |
+| density | Density: Density of wine, related to sugar and alcohol (g/cm^3) |
+| pH | pH: Acidity level; lower pH means more acidic |
+| sulphates | Sulphates: Added for microbial stability (g/dm^3) |
+| alcohol | Alcohol: Alcohol content (% vol) |
+| quality | Quality: Quality score (0–10) rated by wine tasters |
+
+\`\`\`
 
 <img src="EDA_files/figure-gfm/Table2-1.png" style="display: block; margin: auto auto auto 0;" />
 
