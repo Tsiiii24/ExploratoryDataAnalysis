@@ -83,6 +83,11 @@ feature_names_red <- colnames(red_wine)
 # Feature types (data types of each column)
 feature_types_red <- sapply(red_wine, class)
 
+# Summary
+cat("Number of red_wine samples:", num_samples_red, "\n")
+cat("Number of red_wine features:", num_features_red, "\n\n")
+cat("Feature names and types:\n")
+
 # Create summary statistics for numeric variables (mean, median, sd, min, max)
 numeric_stats_red <- red_wine %>%
   select(where(is.numeric)) %>%
@@ -135,6 +140,12 @@ feature_types_White = sapply(white_wine, class)
 # Check the number of rows and columns
 num_samples_white <- nrow(white_wine)
 num_features_white <- ncol(white_wine)
+
+# Summary
+cat("Number of White wine samples:", num_samples_white, "\n")
+cat("Number of white wine features:", num_features_white, "\n\n")
+cat("Feature names and types:\n")
+
 
 # Feature names
 feature_names_white <- colnames(white_wine)
