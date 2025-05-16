@@ -6,9 +6,6 @@ Maurice Otieno, Wanos Bahiru, Biose Ugbo
 
 In this project, the objective is to identify the chemical characteristics that influence wine quality. A wine producer has asked for help in understanding what factors contribute to a good quality wine, using data from the UCI Wine Quality Dataset. Wine quality is typically assessed by trained sensory analysts and can depend on several chemical features such as acidity, alcohol content, sugar levels, and sulfur dioxide levels.
 
-RedWineCSV : https://github.com/Tsiiii24/ExploratoryDataAnalysis/blob/main/winequality-red.csv
-WhiteWineCSV : https://github.com/Tsiiii24/ExploratoryDataAnalysis/blob/main/winequality-white.csv
-
 Based on background research and intuition, I hypothesize that features like higher alcohol content and balanced acidity levels may correlate positively with better wine quality. On the other hand, extremely high levels of certain components like sulfur dioxide may negatively affect taste and thus reduce quality. Through exploratory data analysis and statistical testing, I aim to extract non-obvious insights about what makes a wine “good” or “bad” according to the dataset.
 
 ## 2. Data Understanding
